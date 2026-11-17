@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,18 +22,21 @@ public class GUIRenderer implements IRenderer {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setColor(Color.WHITE);
 
-                g.setColor(Color.WHITE);
+                g2.setStroke(new BasicStroke(3));
 
                 // Area principal do jogo
-                g.drawRect(20, 20, 300, 600);
+                g2.drawRect(20, 20, 300, 600);
 
                 // Area da proxima peca
-                g.drawRect(350, 20, 90, 90);
+                g2.drawRect(350, 20, 180, 180);
+
             }
         };
 
-        painel.setPreferredSize(new Dimension(460, 640));
+        painel.setPreferredSize(new Dimension(550, 640)); // Area da parte preta
         painel.setBackground(Color.BLACK);
     }
 
