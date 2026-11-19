@@ -1,6 +1,8 @@
-package ui;
+package tests;
 
 import javax.swing.SwingUtilities;
+
+import ui.GUIRenderer;
 
 public class TesteGUI {
 
@@ -12,6 +14,6 @@ public class TesteGUI {
     }
 }
 
-// javac -d bin (Get-ChildItem -Recurse src -Filter *.java | ForEach-Object { $_.FullName }) compila
-// java -cp bin ui.TesteGUI executa
+/* javac -d bin (Get-ChildItem -Recurse src -Filter *.java | ForEach-Object { $_.FullName })
+java -cp bin tests.TesteGUI */
 
