@@ -10,7 +10,7 @@ import java.awt.BasicStroke;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import world.Grid;
+import world.Board;
 
 public class GUIRenderer implements IRenderer {
 
@@ -53,7 +53,7 @@ public class GUIRenderer implements IRenderer {
     }
 
     @Override
-    public void render(Grid grid) {
+    public void render(Board board) {
         painel.repaint();
     }
 

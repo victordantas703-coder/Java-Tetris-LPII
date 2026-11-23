@@ -1,3 +1,3 @@
-public class Maingame {
+public class MainGame {
     
 }
