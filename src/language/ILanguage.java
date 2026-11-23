@@ -1,5 +1,5 @@
 package language;
 
 public interface ILanguage {
-    //TODO: Médotos de exibição de cada texto do jogo. Ex.: showButtomStartText(), showScoreText()...
+    //TODO: Criar e implementar médotos de exibição de cada texto do jogo. Ex.: showButtomStartText(), showScoreText()...
 }

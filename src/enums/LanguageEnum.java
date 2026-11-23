@@ -12,7 +12,7 @@ public enum LanguageEnum {
             return valueOf(mode.trim().toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException exception) {
             throw new IllegalArgumentException(
-                "Language must be english, portuguese, or spanish: " + mode,
+                "Language must be english or portuguese: " + mode,
                 exception
             );
         }
