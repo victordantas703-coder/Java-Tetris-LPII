@@ -1,13 +1,13 @@
 package ui;
 
 import java.awt.Component;
-import world.Grid;
+import world.Board;
 
 public interface IRenderer {
 
     void open();
 
-    void render(Grid grid);
+    void render(Board board);
 
     void close();
 
