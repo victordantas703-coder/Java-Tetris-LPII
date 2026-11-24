@@ -13,16 +13,18 @@ public class Level {
         return this.currentLevel;
     }
 
-    public Boolean increaseLevel(){
+    public void increaseLevelGuard(){
         if (this.currentLevel < START_LEVEL)
-            throw new InvalidLevelException("Level abaixo de " + START_LEVEL);
+            throw new InvalidLevelException("Level below " + START_LEVEL);
         if (this.currentLevel > MAX_LEVEL)
-            throw new InvalidLevelException("Level acima de " + MAX_LEVEL);
-        if (this.currentLevel == MAX_LEVEL)
-            return false;
+            throw new InvalidLevelException("Level above " + MAX_LEVEL);
+    }
 
-        this.currentLevel++;
-        return true;
+    public void increaseLevel(){
+        increaseLevelGuard();
+
+        if (this.currentLevel < MAX_LEVEL)
+            this.currentLevel++;
     }
 
 }
