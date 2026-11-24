@@ -2,7 +2,7 @@ package tests;
 
 import gameobject.*;
 
-public class TestShapes {
+public class ShapesTest {
 
     public static void main(String[] args) {
         Shape[] shape = {
