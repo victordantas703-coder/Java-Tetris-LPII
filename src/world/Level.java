@@ -13,6 +13,10 @@ public class Level {
         return this.currentLevel;
     }
 
+    public void setCurrentLevel(int value){
+        this.currentLevel = value;
+    }
+
     private void increaseLevelGuard(){
         if (this.currentLevel < START_LEVEL)
             throw new InvalidLevelException("Level below " + START_LEVEL);

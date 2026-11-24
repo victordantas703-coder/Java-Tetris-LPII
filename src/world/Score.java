@@ -3,9 +3,14 @@ package world;
 import exception.InvalidScoreException;
 
 public class Score {
-    
+
     public static final int START_SCORE = 0; 
     public static final int MAX_SCORE = 999999; 
+
+    public static final int SINGLE = 1;
+    public static final int DOUBLE = 2;
+    public static final int TRIPLE = 3;
+    public static final int TETRIS = 4;
 
     public static final int SIGLE_SCORE = 40;
     public static final int DOUBLE_SCORE = 100;
@@ -18,6 +23,10 @@ public class Score {
         return this.currentScore;
     }
 
+    public void setCurrentScore(int value){
+        this.currentScore = value;
+    }
+
     private void increaseScoreGuard() {
         if (this.currentScore < START_SCORE)
             throw new InvalidScoreException("Score below " + START_SCORE);
@@ -27,19 +36,21 @@ public class Score {
 
     public void increaseScoreByLines(Level level, int completedLines){
         increaseScoreGuard();
+        if (completedLines < Score.SINGLE || completedLines > Score.TETRIS)
+            throw new InvalidScoreException("Invalid completed lines quantity: " + completedLines);
 
         int baseScoreValue = 0;
         switch (completedLines) {
-            case 1:
+            case SINGLE:
                 baseScoreValue = SIGLE_SCORE;
                 break;
-            case 2:
+            case DOUBLE:
                 baseScoreValue = DOUBLE_SCORE;
                 break;
-            case 3:
+            case TRIPLE:
                 baseScoreValue = TRIPLE_SCORE;
                 break;
-            case 4:
+            case TETRIS:
                 baseScoreValue = TETRIS_SCORE;
                 break;
             default:
@@ -54,9 +65,11 @@ public class Score {
 
     public void increaseScoreBySoftDrop(int skippedLinesQuantity) {
         increaseScoreGuard();
+        if (skippedLinesQuantity < 0 || skippedLinesQuantity > Board.BOARD_HEIGHT)
+            throw new InvalidScoreException("Invalid skipped lines quantity: " + skippedLinesQuantity);
 
         if (this.currentScore + skippedLinesQuantity > MAX_SCORE)
-            this.currentScore = MAX_SCORE;
+            this.currentScore = MAX_SCORE; // ignora a pontuação extra
         else
             this.currentScore = this.currentScore + skippedLinesQuantity;
     }

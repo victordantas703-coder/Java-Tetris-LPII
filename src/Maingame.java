@@ -2,10 +2,11 @@ import javax.swing.SwingUtilities;
 
 import gameobject.Shape;
 import gameobject.ShapeFactory;
+import tests.*;
 import ui.GUIRenderer;
 import world.AutoDrop;
 
-public class MainGame {
+public class Maingame {
 
     public static final int SINGLE = 1;
     public static final int DOUBLE = 2;
@@ -19,6 +20,12 @@ public class MainGame {
     private static AutoDrop autoDrop;
 
     public static void main(String[] args) {
+
+        LevelTest.increseLevelTest();
+        LinesTest.increaseLinesTest();
+        ScoreTest.increaseScoreByLinesTest();
+        ScoreTest.increaseScoreBySoftDropTest();
+
         SwingUtilities.invokeLater(() -> {
             GUIRenderer renderer = new GUIRenderer();
 
