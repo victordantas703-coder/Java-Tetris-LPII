@@ -5,7 +5,7 @@ import java.awt.Color;
 public class Shape_LD extends Shape {
     
     public Shape_LD() {
-        createShape(Color.orange);
+        createShape(Color.ORANGE);
     }
 
     public void setBlocksPosition(int x, int y) {
