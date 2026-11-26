@@ -2,8 +2,8 @@ package gameobject;
 
 public class GameObject {
 
-    private int x;
-    private int y;
+    private int x;  // coluna onde o objeto esta
+    private int y;  // linha onde o objeto esta
 
     public int getX() {
         return x;
@@ -13,7 +13,7 @@ public class GameObject {
         return y;
     }
 
-    protected void setPosition(int x, int y) {
+    public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }

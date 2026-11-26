@@ -4,18 +4,12 @@ import java.awt.Color;
 
 public class Shape_LD extends Shape {
     
+    // ▢▢▢ (laranja)
+    // ▢
+    private static final int[][] SPAWN_OFFSETS = { {0, 0}, {1, 0}, {-1, 0}, {-1, 1} };
+
     public Shape_LD() {
-        createShape(Color.ORANGE);
-    }
-
-    public void setBlocksPosition(int x, int y) {
-        // ▢▢▢ (laranja)
-        // ▢
-        blocks[0].setPosition(x, y);
-        blocks[1].setPosition(blocks[0].getX() + Block.BLOCK_SIZE, blocks[0].getY());
-        blocks[2].setPosition(blocks[0].getX() - Block.BLOCK_SIZE, blocks[0].getY());
-        blocks[3].setPosition(blocks[2].getX(), blocks[2].getY() + Block.BLOCK_SIZE);
-
+        super(Color.ORANGE, SPAWN_OFFSETS, 4);
     }
 
 }
