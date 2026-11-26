@@ -1,13 +1,16 @@
+package game;
+
 import javax.swing.SwingUtilities;
 
 import gameobject.Shape;
 import gameobject.ShapeFactory;
-import tests.*;
+import tests.LevelTest;
+import tests.LinesTest;
+import tests.ScoreTest;
 import ui.GUIRenderer;
 import world.AutoDrop;
 
-public class Maingame {
-
+public class MainGame {
     public static final int SINGLE = 1;
     public static final int DOUBLE = 2;
     public static final int TRIPLE = 3;
@@ -56,6 +59,3 @@ public class Maingame {
         return shape;
     }
 }
-
-// javac -d bin (Get-ChildItem -Recurse src -Filter *.java | ForEach-Object { $_.FullName })
-// java -cp bin MainGame
