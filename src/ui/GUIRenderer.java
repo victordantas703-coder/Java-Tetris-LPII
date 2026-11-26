@@ -30,6 +30,7 @@ public class GUIRenderer implements IRenderer {
     private JPanel painel;
     private Shape currentShape;
     private int score, levels, lines;
+    private Shape nextShape;
 
     public GUIRenderer() {
         painel = new JPanel() {
@@ -60,7 +61,7 @@ public class GUIRenderer implements IRenderer {
                         for (int col = 0; col < Board.BOARD_WIDTH; col++) {
                             Color color = board.getCell(row, col);
                             if (color != null) {
-                                drawBlock(g2, col * Block.BLOCK_SIZE, row * Block.BLOCK_SIZE, color);
+                                drawBlock(g2, BOARD_X + col * Block.BLOCK_SIZE, BOARD_Y + row * Block.BLOCK_SIZE, color);
                             }
                         }
                     }
@@ -70,6 +71,17 @@ public class GUIRenderer implements IRenderer {
                 
                 // Area da proxima peca
                 g2.drawRect(350, 20, 180, 180);
+                // Próxima peça, centralizada na caixa
+                if (nextShape != null) {
+                    int width  = nextShape.getRightX() - nextShape.getLeftX();
+                    int height = nextShape.getBottomY() - nextShape.getTopY();
+                    int originX = 350 + (180 - width) / 2 - nextShape.getLeftX();
+                    int originY = 20 + (180 - height) / 2 - nextShape.getTopY();
+                    for (Block block : nextShape.blocks) {
+                        drawBlock(g2, originX + block.getX(), originY + block.getY(), block.blockColor);
+                    }
+                }
+                
                 g2.setRenderingHint( RenderingHint.KEY_TEXT_ANTIALIASING , RenderingHint.VALUE_TEXT_ANTIALIASING_ON);
 
                 g2.setColor(Color.White);
@@ -82,7 +94,7 @@ public class GUIRenderer implements IRenderer {
                 // Peça atual: a posição dos blocos é relativa ao canto da área do jogo
                 if (currentShape != null) {
                     for (Block block : currentShape.blocks) {
-                        drawBlock(g2, block.getX(), block.getY(), block.blockColor);
+                        drawBlock(g2, BOARD_X + block.getX(), BOARD_Y + block.getY(), block.blockColor);
                     }
                 }
 
@@ -106,9 +118,9 @@ public class GUIRenderer implements IRenderer {
     private void drawBlock(Graphics2D g2, int x, int y, Color color) {
         g2.setStroke(new BasicStroke(1));
         g2.setColor(color);
-        g2.fillRect(BOARD_X + x, BOARD_Y + y, Block.BLOCK_SIZE, Block.BLOCK_SIZE);
+        g2.fillRect(x, y, Block.BLOCK_SIZE, Block.BLOCK_SIZE);
         g2.setColor(Color.BLACK);
-        g2.drawRect(BOARD_X + x, BOARD_Y + y, Block.BLOCK_SIZE, Block.BLOCK_SIZE);
+        g2.drawRect(x, y, Block.BLOCK_SIZE, Block.BLOCK_SIZE);
     }
 
     // Define qual peça será desenhada
@@ -120,6 +132,11 @@ public class GUIRenderer implements IRenderer {
         this.score = score;
         this.level = level;
         this.lines = lines;
+    }
+    public void setNextShape(Shape shape){
+        this.nextShape = shape;
+    }
+    
 
     @Override
     public void open() {
