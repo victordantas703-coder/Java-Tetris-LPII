@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.Font;
 import java.awl.RenderingHint;
+import language.EnglishLanguage;
+import language.EnglishLanguage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -31,6 +33,9 @@ public class GUIRenderer implements IRenderer {
     private Shape currentShape;
     private int score, levels, lines;
     private Shape nextShape;
+    private ILanguage language = new EnglishLanguage();
+    private String overlayTitle;      // null = sem tela por cima
+    private String overlaySubtitle;
 
     public GUIRenderer() {
         painel = new JPanel() {
@@ -81,6 +86,9 @@ public class GUIRenderer implements IRenderer {
                         drawBlock(g2, originX + block.getX(), originY + block.getY(), block.blockColor);
                     }
                 }
+                g2.setColor(Color.GRAY);
+                g2.setFont(new Font("Monospaced", Font.BOLD, 14));
+                g2.drawString(language.nextText(), 360, 42);
                 
                 g2.setRenderingHint( RenderingHint.KEY_TEXT_ANTIALIASING , RenderingHint.VALUE_TEXT_ANTIALIASING_ON);
 
@@ -96,6 +104,19 @@ public class GUIRenderer implements IRenderer {
                     for (Block block : currentShape.blocks) {
                         drawBlock(g2, BOARD_X + block.getX(), BOARD_Y + block.getY(), block.blockColor);
                     }
+                }
+                // Tela por cima do tabuleiro (menu, pausa, game over)
+                if (overlayTitle != null) {
+                    g2.setColor(new Color(0, 0, 0, 200));   // preto semitransparente
+                    g2.fillRect(BOARD_X, BOARD_Y, BOARD_WIDTH, BOARD_HEIGHT);
+
+                    g2.setColor(Color.WHITE);
+                    g2.setFont(new Font("Monospaced", Font.BOLD, 28));
+                    drawCentered(g2, overlayTitle, BOARD_Y + BOARD_HEIGHT / 2 - 10);
+
+                    g2.setColor(Color.LIGHT_GRAY);
+                    g2.setFont(new Font("Monospaced", Font.PLAIN, 16));
+                    drawCentered(g2, overlaySubtitle, BOARD_Y + BOARD_HEIGHT / 2 + 25);
                 }
 
             }
@@ -126,6 +147,22 @@ public class GUIRenderer implements IRenderer {
     // Define qual peça será desenhada
     public void setCurrentShape(Shape shape) {
         this.currentShape = shape;
+    }
+
+    public void setLanguage(ILanguage language) {
+        this.language = language;
+    }
+
+    // title null = esconde a tela por cima
+    public void setOverlay(String title, String subtitle) {
+        this.overlayTitle = title;
+        this.overlaySubtitle = subtitle;
+    }
+
+    // Escreve o texto centralizado na horizontal sobre a área do tabuleiro
+    private void drawCentered(Graphics2D g2, String text, int y) {
+        int width = g2.getFontMetrics().stringWidth(text);
+        g2.drawString(text, BOARD_X + (BOARD_WIDTH - width) / 2, y);
     }
 
     public void setStats(int score, int level, int lines){
