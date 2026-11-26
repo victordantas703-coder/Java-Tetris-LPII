@@ -5,7 +5,7 @@ public enum CommandsEnum {
     RIGHT,
     DOWN,
     START,
-    ROTATE_L,
-    ROTATE_R;
+    ROTATE_CLOCKWISE,
+    ROTATE_COUNTERCLOCKWISE;
 
 }
