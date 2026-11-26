@@ -23,6 +23,10 @@ public class Score {
         return this.currentScore;
     }
 
+    public boolean hasReachedMax(){
+        return this.currentScore >= MAX_SCORE;
+    }
+
     public void setCurrentScore(int value){
         this.currentScore = value;
     }
