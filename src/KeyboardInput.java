@@ -22,6 +22,8 @@ public class KeyboardInput implements IInputs {
                     case KeyEvent.VK_Z     -> CommandsEnum.ROTATE_L;
                     case KeyEvent.VK_X, KeyEvent.VK_UP -> CommandsEnum.ROTATE_R;
                     case KeyEvent.VK_ENTER -> CommandsEnum.START;
+                    case KeyEvent.VK_P, KeyEvent.VK_ESCAPE -> CommandsEnum.PAUSE;
+                    case KeyEvent.VK_L     -> CommandsEnum.TOGGLE_LANGUAGE;
                     default -> null; // tecla que o jogo não usa
                 };
 
