@@ -1,13 +1,18 @@
 import javax.swing.SwingUtilities;
 
+import enums.CommandsEnum;
+import enums.InputsEnum;
+import gameobject.Block;
 import gameobject.Shape;
 import gameobject.ShapeFactory;
+import inputs.IInputs;
+import inputs.InputFactory;
 import tests.*;
 import ui.GUIRenderer;
 import world.AutoDrop;
-import world.Score;
 import world.Level;
 import world.Lines;
+import world.Score;
 
 public class Maingame {
 
@@ -16,11 +21,18 @@ public class Maingame {
     public static final int TRIPLE = 3;
     public static final int TETRIS = 4;
 
+    private static final int BOARD_WIDTH = 300;
     private static final int BOARD_HEIGHT = 600;
     private static final int SPAWN_X = 120;
     private static final int SPAWN_Y = 0;
 
+    private static GUIRenderer renderer;
     private static AutoDrop autoDrop;
+    private static Shape currentShape;
+
+    private static final Score score = new Score();
+    private static final Level level = new Level();
+    private static final Lines lines = new Lines();
 
     public static void main(String[] args) {
 
@@ -30,38 +42,61 @@ public class Maingame {
         ScoreTest.increaseScoreBySoftDropTest();
 
         SwingUtilities.invokeLater(() -> {
-            GUIRenderer renderer = new GUIRenderer();
-            Score score = new Score();
-            Level level = new Level();
-            Lines lines = new Lines();
+            renderer = new GUIRenderer();
 
-            Shape shape = spawnShape();
-            renderer.setCurrentShape(shape);
-            renderer.setStats(score.getCurrentScore(), level.getCurrentLevel(), lines.getCurrentLines());
+            currentShape = spawnShape();
+            renderer.setCurrentShape(currentShape);
             renderer.open();
 
             autoDrop = new AutoDrop(
-                shape,
+                currentShape,
                 BOARD_HEIGHT,
+                Maingame::refresh,
                 () -> {
-                    score.increaseScoreBySoftDrop(1); // TEMPORÁRIO, só para ver o painel mudar
-                    renderer.setStats(score.getCurrentScore(), level.getCurrentLevel(), lines.getCurrentLines());
-                    renderer.render(null);
-                 },
-                () -> {
-                    Shape next = spawnShape();
-                    renderer.setCurrentShape(next);
-                    autoDrop.setShape(next);
-                    renderer.render(null);
+                    currentShape = spawnShape();
+                    renderer.setCurrentShape(currentShape);
+                    autoDrop.setShape(currentShape);
+                    refresh();
                     autoDrop.start();
                 }
             );
 
+            IInputs input = new InputFactory().create(InputsEnum.from());
+            input.attach(renderer.getEventSource(), Maingame::handleCommand);
+
+            refresh();
             autoDrop.start();
         });
     }
 
-  
+    private static void handleCommand(CommandsEnum command) {
+        switch (command) {
+            case LEFT -> {
+                if (currentShape.getLeftX() - Block.BLOCK_SIZE >= 0) {
+                    currentShape.updateBlocksPosition(CommandsEnum.LEFT);
+                    refresh();
+                }
+            }
+            case RIGHT -> {
+                if (currentShape.getRightX() + Block.BLOCK_SIZE <= BOARD_WIDTH) {
+                    currentShape.updateBlocksPosition(CommandsEnum.RIGHT);
+                    refresh();
+                }
+            }
+            case DOWN -> {
+                if (autoDrop.step()) {            // true = a peça desceu
+                    score.increaseScoreBySoftDrop(1);
+                    refresh();
+                }
+            }
+            default -> { } // ROTATE_L, ROTATE_R e START ainda não existem
+        }
+    }
+
+    private static void refresh() {
+        renderer.setStats(score.getCurrentScore(), level.getCurrentLevel(), lines.getCurrentLines());
+        renderer.render(null);
+    }
 
     private static Shape spawnShape() {
         Shape shape = ShapeFactory.generateShape();
@@ -69,6 +104,3 @@ public class Maingame {
         return shape;
     }
 }
-
-// javac -d bin (Get-ChildItem -Recurse src -Filter *.java | ForEach-Object { $_.FullName })
-// java -cp bin MainGame
