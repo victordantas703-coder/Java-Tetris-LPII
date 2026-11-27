@@ -13,6 +13,7 @@ import inputs.IInputs;
 import inputs.InputFactory;
 import language.ILanguage;
 import language.LanguageFactory;
+import tests.MainGameTest;
 import ui.GUIRenderer;
 import ui.IRenderer;
 import world.Board;
@@ -74,6 +75,12 @@ public class MainGame {
     }
 
     public void run() {
+        testReport = MainGameTest.runAll(); // vazia se os asserts estiverem desativados
+        if(testReport.isEmpty())
+            state = GameStateEnum.LANGUAGE_SELECT;
+        else
+            state = GameStateEnum.UNIT_TESTS;
+
         stateTimerMs = 0;
 
         renderer.open(this::onFrame);
