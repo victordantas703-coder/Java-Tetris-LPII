@@ -59,6 +59,9 @@ public class ScoreTest {
         score.increaseScoreByLines(level, Score.TETRIS);
         assert score.getCurrentScore() == 6000 : "O score deveria ser 6000";
 
+        score.setCurrentScore(Score.MAX_SCORE);
+        assert score.hasReachedMax() : "O score deveria ter atingido o máximo";
+
     }
 
     public static void increaseScoreBySoftDropTest() {

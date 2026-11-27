@@ -35,7 +35,12 @@ public class LevelTest {
 
         assert level.getCurrentLevel() == Level.MAX_LEVEL : "O level deveria ser " + Level.MAX_LEVEL;
         assert !(level.increaseLevel()) : "Deveria retonar false ao tentar aumentar o level quando level é " + Level.MAX_LEVEL;
+        
+        level.setCurrentLevel(Level.START_LEVEL);
+        assert level.getFallDelayMs() == 887 : "O delay de queda deveria ser 887ms no level " + Level.START_LEVEL;
 
+        level.setCurrentLevel(Level.MAX_LEVEL);
+        assert level.getFallDelayMs() == 184 : "O delay de queda deveria ser 184ms no level " + Level.MAX_LEVEL; 
     }
 
 }
