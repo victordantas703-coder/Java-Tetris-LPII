@@ -326,4 +326,16 @@ public class MainGame {
         state = GameStateEnum.GAME_OVER;
     }
 
+    // Usados no MainGameTest
+    public GameStateEnum getState() { return state; }
+    public Board getBoard() { return board; }
+    public Score getScore() { return score; }
+    public Level getLevel() { return level; }
+    public Lines getLines() { return lines; }
+    public Shape getCurrentShape() { return currentShape; }
+    public void setCurrentShape(Shape shape) {
+        this.currentShape = shape;
+        this.fallTimerMs = 0;
+    }
+
 }
